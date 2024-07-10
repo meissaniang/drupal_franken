@@ -1,0 +1,20 @@
+/vendor/
+
+# Ignore configuration files that may contain sensitive information.
+web/sites/*/services*.yml
+web/module/**.*
+web/core/*
+web/sites/default/files/*
+web/modules/contrib/*
+# Ignore paths that contain user-generated content.
+web/sites/*/files
+web/sites/*/private
+
+# Ignore multi-site test environment.
+web/sites/simpletest
+
+.idea/
+
+web/core/
+
+web/modules/contrib/

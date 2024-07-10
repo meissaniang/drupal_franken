@@ -1,0 +1,39 @@
+services:
+  drupal:
+    image: "${PROJECT_NAME}_frankenphp"
+    container_name: "${PROJECT_NAME}_frankenphp"
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - ./:/opt/drupal:cached
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: $DB_HOST
+      DB_PORT: $DB_PORT
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      DB_DRIVER: $DB_DRIVER
+      DRUPAL_HASH_SALT: ${DRUPAL_HASH_SALT}
+      PROJECT_BASE_URL: ${PROJECT_BASE_URL}
+      PROJECT_PORT: ${PROJECT_PORT}
+    restart: always
+
+  postgres:
+    container_name: "${PROJECT_NAME}_postgres"
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
+    environment:
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PASSWORD
+    restart: always
+
+  adminer:
+    image: adminer
+    container_name: "${PROJECT_NAME}_adminer"
+    restart: always
+    ports:
+      - 1400:8080
